@@ -25,6 +25,7 @@ Implement (I did with tail pointer & without):
 struct SLinkedList
 {
 	int _size;
+	struct SListNode *tail;
 	struct SListNode *head;
 };
 
@@ -59,6 +60,7 @@ void decrementSize(struct SLinkedList*);
 //AUXILIARES
 void init(struct SLinkedList *l){
 	l->head = NULL;
+	l->tail = NULL;
 	l->_size = 0;
 }
 
@@ -87,22 +89,21 @@ int valueAt(struct SLinkedList *l, int index){
 	}
 	
 	struct SListNode *aux;
-	struct SListNode *aux2;
+	
 	aux = l->head;
 
 	for (int i = 0; i < index; i++) {
 		aux = aux->next;
 	}
 
-	aux2 = aux;
-
-	return aux2->_value;
+	return aux->_value;
 }
 
 void pushFront(struct SLinkedList *l, int value){
 	struct SListNode *n = (struct SListNode*)calloc(1,sizeof(SListNode));
 	if (empty(l)) {
 		n->next = NULL;
+		l->tail = n;
 	}
 	else{
 		n->next = l->head;
@@ -126,26 +127,25 @@ int popFront(struct SLinkedList *l){
 	aux2 = l->head;
 	aux = l->head->_value;
 	l->head = l->head->next;
+	if (size(l) == 2){
+		l->tail = l->head;
+	}
 
-	free(aux2);			//Libero el respacio reservado en pushFront;
+	free(aux2);
 	decrementSize(l);
 	return aux;
 }
 
 void pushBack(struct SLinkedList *l, int value){
-	struct SListNode *aux;
 	struct SListNode *n = (struct SListNode*)calloc(1,sizeof(SListNode));
-	
-	aux = l->head;
 
 	if (empty(l)) {
 		l->head = n;
+		l->tail = n;
 	}
 	else {
-		for (int i = 0; i < size(l)-1; i++) {
-			aux = aux->next;
-		}
-		aux->next = n;
+		l->tail->next = n;
+		l->tail = l->tail->next;
 	}
 
 	n->next = NULL;
