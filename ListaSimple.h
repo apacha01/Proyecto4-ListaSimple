@@ -162,13 +162,14 @@ int popBack(struct SLinkedList *l){
 	struct SListNode *aux;
 	int aux2;
 	aux = l->head;
+	aux2 = l->tail->_value;
 
 	if(size(l) >= 1){
-		for (int i = 0; i < size(l)-1; i++) {
+		for (int i = 0; i < size(l)-2; i++) {
 			aux = aux->next;
 		}
-		aux2 = aux->_value;
-		aux = NULL;
+		l->tail = aux;
+		aux = aux->next;
 	}
 
 	free(aux);
