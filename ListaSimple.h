@@ -243,6 +243,9 @@ int valueNfromEnd(struct SLinkedList *l, int index){
 	if (index < 0 || index >= size(l)) {
 		printf("\nNOP\n");
 	}
+	else if (index == 0){
+		return l->tail->_value;
+	}
 	else {
 		return valueAt(l,valueNfromHead);
 	}
