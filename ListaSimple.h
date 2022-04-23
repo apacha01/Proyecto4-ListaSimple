@@ -182,14 +182,7 @@ int front(struct SLinkedList *l){
 }
 
 int back(struct SLinkedList *l){
-	struct SListNode *aux;
-	aux = l->head;
-
-	for (int i = 0; i < size(l)-1; i++) {
-			aux = aux->next;
-	}
-
-	return aux->_value;
+	return l->tail->_value;
 }
 
 void insert(struct SLinkedList *l, int index, int value){
